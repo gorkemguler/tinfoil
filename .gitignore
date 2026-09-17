@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+tinfoil.json
+.DS_Store

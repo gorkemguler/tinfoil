@@ -1,0 +1,56 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} · python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ["3.8", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Unit tests
+        run: python3 -m unittest -v test_tinfoil
+
+      - name: Audit the runner itself
+        run: python3 tinfoil.py --all
+
+      - name: JSON output is well formed
+        run: python3 tinfoil.py --json | python3 -m json.tool > /dev/null
+
+      - name: Demo renders
+        run: python3 tinfoil.py --demo --color never
+
+      - name: Exit code honours --fail-under
+        shell: bash
+        run: |
+          python3 tinfoil.py --demo --json --fail-under 0 > /dev/null
+          if python3 tinfoil.py --demo --json --fail-under 100 > /dev/null; then
+            echo "expected a non-zero exit below the threshold" && exit 1
+          fi
+
+  no-network:
+    name: privacy guarantee
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: tinfoil.py must not import any networking module
+        run: |
+          if grep -nE '^\s*(import|from)\s+(urllib|http|socket|ftplib|smtplib|requests|telnetlib)' tinfoil.py; then
+            echo "::error::tinfoil.py gained a networking import"
+            exit 1
+          fi
+          echo "clean"
