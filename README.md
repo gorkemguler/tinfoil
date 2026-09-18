@@ -1,11 +1,6 @@
 <div align="center">
 
-```
-▀█▀ █ █▄ █ █▀▀ █▀█ █ █
- █  █ █ ▀█ █▀  █▄█ █ █▄▄
-```
-
-**Your machine's attack surface, in one command.**
+<img src="assets/banner.png" alt="tinfoil — your machine's attack surface, in one command" width="100%">
 
 Every laptop quietly accumulates exposure: a database bound to `0.0.0.0`, an AWS key
 pasted into shell history, a `.env` that got committed, a browser extension that can
@@ -14,7 +9,7 @@ you a number.
 
 [![license](https://img.shields.io/badge/license-MIT-black)](LICENSE)
 [![python](https://img.shields.io/badge/python-3.8%2B-black)](https://www.python.org/)
-[![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-black)](#)
+[![platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-black)](#platform-support)
 [![dependencies](https://img.shields.io/badge/dependencies-0-brightgreen)](#why-one-file)
 [![network calls](https://img.shields.io/badge/network%20calls-0-brightgreen)](#privacy)
 
@@ -158,6 +153,17 @@ Each check contributes its weight to the score: pass earns it all, a warning ear
 a failure earns none, and anything that cannot be determined is left out of the maths
 entirely rather than silently counted as a pass.
 
+## Platform support
+
+| Platform | Status | Checks |
+|---|---|---|
+| **macOS** | Supported | All 22, including five that only exist on a Mac: SIP, Gatekeeper, download quarantine, automatic login, and pending OS updates |
+| **Linux** | Supported | 17 — everything except those five. Firewall rules need root to read unless you use `ufw` or `firewalld`, and the screen-lock check reads GNOME settings only; anything that cannot be determined is skipped, not guessed |
+| **Windows** | Not yet | Native Windows is not supported. Under WSL it runs, but it audits the WSL Linux environment rather than Windows itself — there are no BitLocker, Defender, or Windows Firewall checks |
+
+Python 3.8 or newer, which ships with macOS and every current Linux distribution. CI runs
+the full suite on both on every push.
+
 ## Privacy
 
 This is a tool that reads your SSH keys and your shell history. The guarantees are
@@ -263,8 +269,9 @@ a relative signal to act on, not a metric to optimise.
 open an issue so the heuristic gets tightened. False positives in a security tool are a
 bug, not a conservative default.
 
-**Windows?** Not yet. The check bodies are POSIX-shaped; a WSL run works today, native
-Windows needs a contributor.
+**Windows?** Not natively. Under WSL `tinfoil` runs, but it audits the WSL Linux
+environment, not the Windows host — so it will not tell you whether BitLocker or Defender
+is on. Native Windows checks need a contributor; see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Development
 
@@ -272,6 +279,7 @@ Windows needs a contributor.
 make test     # unit tests, no test dependencies either
 make audit    # audit this machine, including the checks that were skipped
 make gif      # re-record the README recordings (needs vhs)
+make banner   # re-render the banner and social preview (needs Chrome)
 ```
 
 The recordings are generated from [`assets/demo.tape`](assets/demo.tape) and

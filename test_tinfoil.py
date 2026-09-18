@@ -239,3 +239,29 @@ class TestNoBlindPasses(unittest.TestCase):
 
     def test_docker_does_not_claim_local_only_when_sockets_are_unreadable(self):
         self.assertNotEqual(t.chk_docker_exposure().status, t.PASS)
+
+
+class TestUnsupportedPlatform(unittest.TestCase):
+    def setUp(self):
+        self._saved = (t.SYSTEM, t.IS_MAC, t.IS_LINUX)
+        t.SYSTEM, t.IS_MAC, t.IS_LINUX = "Windows", False, False
+
+    def tearDown(self):
+        t.SYSTEM, t.IS_MAC, t.IS_LINUX = self._saved
+
+    def test_explains_itself_instead_of_matching_nothing(self):
+        import contextlib, io as _io
+        err = _io.StringIO()
+        with contextlib.redirect_stderr(err):
+            rc = t.main(["--color", "never"])
+        self.assertEqual(rc, 2)
+        self.assertIn("not supported", err.getvalue())
+        self.assertIn("WSL", err.getvalue())
+
+    def test_demo_still_works_everywhere(self):
+        import contextlib, io as _io
+        out = _io.StringIO()
+        with contextlib.redirect_stdout(out):
+            rc = t.main(["--demo", "--color", "never"])
+        self.assertEqual(rc, 0)
+        self.assertIn("PARANOIA SCORE", out.getvalue())

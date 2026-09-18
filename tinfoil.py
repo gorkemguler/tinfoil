@@ -33,6 +33,7 @@ HOME = Path.home()
 SYSTEM = platform.system()
 IS_MAC = SYSTEM == "Darwin"
 IS_LINUX = SYSTEM == "Linux"
+SUPPORTED_SYSTEMS = ("Darwin", "Linux")
 
 CRITICAL, HIGH, MEDIUM, LOW = "critical", "high", "medium", "low"
 SEV_RANK = {CRITICAL: 0, HIGH: 1, MEDIUM: 2, LOW: 3}
@@ -1848,6 +1849,13 @@ def main(argv=None):
 
     only = {s.strip() for s in args.only.split(",")} if args.only else None
     skip = {s.strip() for s in args.skip.split(",")} if args.skip else None
+
+    if not args.demo and SYSTEM not in SUPPORTED_SYSTEMS:
+        sys.stderr.write(
+            "tinfoil: %s is not supported yet - it audits macOS and Linux.\n"
+            "Under WSL it runs, but it audits the WSL Linux environment, not Windows itself.\n"
+            "`tinfoil --demo` shows what a report looks like.\n" % (SYSTEM or "this platform"))
+        return 2
 
     started = time.time()
     if args.demo:
