@@ -21,16 +21,11 @@ json:
 	@echo 'wrote report.json'
 
 # Regenerate assets/demo.gif and assets/ci.gif. Run from the repository root:
-# the tapes invoke ./tinfoil.py by relative path.
+# the tapes invoke ./tinfoil.py by relative path. See scripts/render-gif.sh for
+# why the encode is done there rather than by vhs itself.
 gif:
-	@command -v vhs >/dev/null 2>&1 || { \
-	  echo 'vhs not found. Install it with:'; \
-	  echo '  brew install vhs'; \
-	  echo '  go install github.com/charmbracelet/vhs@latest'; \
-	  exit 1; }
-	vhs assets/demo.tape
-	vhs assets/ci.tape
-	@echo 'wrote assets/demo.gif and assets/ci.gif'
+	./scripts/render-gif.sh assets/demo.tape
+	./scripts/render-gif.sh assets/ci.tape
 
 clean:
 	rm -rf __pycache__ report.json

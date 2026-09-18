@@ -15,21 +15,18 @@ Set Theme "Dracula"
 Set FontSize 14
 Set LineHeight 1.2
 Set Width 900
-Set Height 520
+Set Height 470
 Set Padding 20
-Set Margin 16
-Set MarginFill "#181a24"
-Set BorderRadius 10
-Set WindowBar Colorful
-Set WindowBarSize 34
 Set Framerate 30
 Set TypingSpeed 45ms
 Set LoopOffset 40%
 
 Hide
-Type "export PS1='❯ ' && clear"
+Type "PS1='$ '"
 Enter
-Sleep 600ms
+Type "clear"
+Enter
+Sleep 400ms
 Show
 
 Sleep 600ms

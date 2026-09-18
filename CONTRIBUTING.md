@@ -61,6 +61,14 @@ brew install vhs     # once
 make gif             # rewrites assets/demo.gif and assets/ci.gif
 ```
 
+`make gif` goes through [`scripts/render-gif.sh`](scripts/render-gif.sh) rather than
+calling `vhs` directly. VHS captures the frames reliably, but its final composite and
+encode step fails silently on some setups — vhs 0.12 on macOS exits `0`, prints
+`Creating demo.gif...`, and writes no file, partly because it still passes ffmpeg's
+`-vsync`, which ffmpeg 8 removed. The script takes the frames VHS exports and encodes
+them itself. If a later VHS fixes this, plain `vhs assets/demo.tape` will work again and
+the script becomes a thin wrapper around the same output.
+
 The tapes are sized to hold the report without wrapping or scrolling. Adding lines to
 the demo output can push the score off the top of the frame, so read the comment at the
 top of `assets/demo.tape` before re-recording.

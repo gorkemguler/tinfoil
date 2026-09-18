@@ -5,3 +5,4 @@ venv/
 tinfoil.json
 .DS_Store
 report.json
+.frames-*/

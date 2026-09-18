@@ -22,23 +22,20 @@ Set Shell "bash"
 Set Theme "Dracula"
 Set FontSize 13
 Set LineHeight 1.2
-Set Width 940
-Set Height 1000
+Set Width 900
+Set Height 980
 Set Padding 20
-Set Margin 16
-Set MarginFill "#181a24"
-Set BorderRadius 10
-Set WindowBar Colorful
-Set WindowBarSize 34
 Set Framerate 30
 Set TypingSpeed 55ms
 Set LoopOffset 45%
 
 # Start recording on a clean screen with a bare prompt.
 Hide
-Type "export PS1='❯ ' && clear"
+Type "PS1='$ '"
 Enter
-Sleep 600ms
+Type "clear"
+Enter
+Sleep 400ms
 Show
 
 Sleep 700ms
