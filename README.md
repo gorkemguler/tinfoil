@@ -111,7 +111,7 @@ you a number.
 One file, standard library only. Nothing to install.
 
 ```bash
-git clone https://github.com/OWNER/tinfoil.git
+git clone https://github.com/gorkemguler/tinfoil.git
 cd tinfoil
 python3 tinfoil.py
 ```
@@ -119,7 +119,7 @@ python3 tinfoil.py
 Or grab the single file:
 
 ```bash
-curl -fsSLO https://raw.githubusercontent.com/OWNER/tinfoil/main/tinfoil.py
+curl -fsSLO https://raw.githubusercontent.com/gorkemguler/tinfoil/main/tinfoil.py
 python3 tinfoil.py
 ```
 
