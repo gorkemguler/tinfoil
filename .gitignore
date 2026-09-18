@@ -4,3 +4,4 @@ __pycache__/
 venv/
 tinfoil.json
 .DS_Store
+report.json

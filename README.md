@@ -22,6 +22,11 @@ you a number.
 
 ---
 
+![tinfoil auditing a machine](assets/demo.gif)
+
+<details>
+<summary><b>Prefer text?</b> The same run in full, including the passing checks and the remediation block the recording trims.</summary>
+
 ```
   ▀█▀ █ █▄ █ █▀▀ █▀█ █ █  
    █  █ █ ▀█ █▀  █▄█ █ █▄▄  v0.1.0  ·  Darwin 25.6.0
@@ -95,8 +100,9 @@ you a number.
   no network calls were made · nothing left this machine
 ```
 
-<sub>Sample output (`tinfoil --demo`) — synthetic findings, so you can see the shape of a
-report before running it on your own machine.</sub>
+</details>
+
+<sub>Synthetic findings (<code>tinfoil --demo</code>), so you can see the shape of a report before pointing it at your own machine.</sub>
 
 ---
 
@@ -176,6 +182,8 @@ python3 tinfoil.py --json --fail-under 80
 
 Exit code `1` when the score drops below the threshold, `0` otherwise — enough to gate a
 build or fail a runner image that drifted.
+
+![tinfoil in a pipeline](assets/ci.gif)
 
 ```yaml
 - name: Audit the runner
@@ -258,13 +266,19 @@ bug, not a conservative default.
 **Windows?** Not yet. The check bodies are POSIX-shaped; a WSL run works today, native
 Windows needs a contributor.
 
-## Tests
+## Development
 
 ```bash
-python3 -m unittest -v test_tinfoil
+make test     # unit tests, no test dependencies either
+make audit    # audit this machine, including the checks that were skipped
+make gif      # re-record the README recordings (needs vhs)
 ```
 
-No test dependencies either.
+The recordings are generated from [`assets/demo.tape`](assets/demo.tape) and
+[`assets/ci.tape`](assets/ci.tape) with [vhs](https://github.com/charmbracelet/vhs), so a
+change to the report format is a one-command re-record rather than a manual screen
+capture. The tapes are sized to fit the report exactly — if you change what the report
+prints, read the comment at the top of the tape before re-recording.
 
 ## License
 

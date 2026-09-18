@@ -53,6 +53,18 @@ python3 tinfoil.py --all             # your check should appear, correctly
 python3 tinfoil.py --json | python3 -m json.tool > /dev/null
 ```
 
+If your change alters what the report prints, re-record the README recordings so the
+documentation does not drift:
+
+```bash
+brew install vhs     # once
+make gif             # rewrites assets/demo.gif and assets/ci.gif
+```
+
+The tapes are sized to hold the report without wrapping or scrolling. Adding lines to
+the demo output can push the score off the top of the frame, so read the comment at the
+top of `assets/demo.tape` before re-recording.
+
 Add a test for any parsing or classification logic — the pure functions
 (`scan_secrets`, `_key_is_encrypted`, `_is_public`, `score_of`) all have tests to
 copy from. Checks that shell out are covered by
