@@ -234,8 +234,7 @@ Available in that namespace: `check`, `Result`, `run`, `read_text`, `tail_text`,
 `mode_of`, `tilde`, `redact`, `scan_secrets`, `HOME`, `IS_MAC`, `IS_LINUX`, and the
 `CRITICAL`/`HIGH`/`MEDIUM`/`LOW` and `FAIL`/`WARN`/`PASS`/`SKIP` constants.
 
-If the check is generally useful, send it as a PR — that is the fastest way to
-contribute here. See [CONTRIBUTING.md](CONTRIBUTING.md).
+If the check is generally useful, send it as a PR.
 
 ## Why one file
 
@@ -271,7 +270,7 @@ bug, not a conservative default.
 
 **Windows?** Not natively. Under WSL `tinfoil` runs, but it audits the WSL Linux
 environment, not the Windows host — so it will not tell you whether BitLocker or Defender
-is on. Native Windows checks need a contributor; see [CONTRIBUTING.md](CONTRIBUTING.md).
+is on.
 
 ## Development
 
